@@ -50,12 +50,25 @@ docker run --rm lem-tests
 | `command_info` | Get command information |
 | `eval_expression` | Evaluate Lisp expression |
 
+### Filesystem Operations
+
+| Tool | Description |
+|------|-------------|
+| `file_list` | List files in a directory |
+| `shell_execute` | Execute a shell command |
+
 ## Resources
 
 | URI Pattern | Description |
 |-------------|-------------|
 | `buffer://{name}` | Buffer content |
 | `file://{path}` | File content |
+
+## Security Confirmation
+
+For security reasons, any tool that performs a "dangerous" operation (such as writing to a file, executing a command, or evaluating code) will require manual confirmation before it can run. A prompt will appear in the Lem mini-buffer, and you will need to confirm the action by pressing "y".
+
+This feature is designed to prevent unintended or malicious actions by the LLM agent, giving you full control over the editor.
 
 ## Lem Commands
 

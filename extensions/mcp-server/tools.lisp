@@ -49,3 +49,10 @@ BODY is the tool implementation."
       (lambda (,params-var)
         (let ,arg-bindings
           ,@body)))))
+
+(defmacro define-secure-mcp-tool (name (&rest args) (&key description input-schema) &body body)
+  "Define and register a secure MCP tool that requires user confirmation."
+  `(define-mcp-tool ,name (,@args) (:description ,description :input-schema ,input-schema)
+     (if (prompt-for-y-or-n-p (format nil "MCP tool '~A' wants to run. Allow?" ,name))
+         (progn ,@body)
+         (mcp-error +request-cancelled+ "User cancelled the execution"))))

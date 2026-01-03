@@ -19,5 +19,6 @@
                 :serial t
                 :components ((:file "buffer")
                              (:file "editing")
-                             (:file "command")))
+                             (:file "command")
+                             (:file "filesystem")))
                (:file "commands")))
