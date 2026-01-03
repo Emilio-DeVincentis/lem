@@ -297,6 +297,7 @@
                "lem-claude-code"
                "lem-bookmark"
                "lem-mcp-server"
+               "lem-ai-chat"
                #+sbcl
                "lem-living-canvas"
                "lem-tree-sitter"
