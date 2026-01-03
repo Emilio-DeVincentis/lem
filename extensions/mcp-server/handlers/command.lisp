@@ -3,7 +3,7 @@
 ;;; Command Execution Tools
 
 ;; command_list - List available commands
-(define-mcp-tool "command_list" (prefix)
+(define-secure-mcp-tool "command_list" (prefix)
   (:description "List available editor commands"
    :input-schema (("type" . "object")
                   ("properties" . (("prefix" . (("type" . "string")
@@ -20,7 +20,7 @@
       (yason:encode (sort (copy-list commands) #'string<) s))))
 
 ;; command_execute - Execute a command
-(define-mcp-tool "command_execute" (command-name args)
+(define-secure-mcp-tool "command_execute" (command-name args)
   (:description "Execute an editor command by name"
    :input-schema (("type" . "object")
                   ("properties" . (("command_name" . (("type" . "string")
@@ -44,7 +44,7 @@
                    (format nil "Command execution failed: ~A" e))))))
 
 ;; command_info - Get information about a command
-(define-mcp-tool "command_info" (command-name)
+(define-secure-mcp-tool "command_info" (command-name)
   (:description "Get information about a command"
    :input-schema (("type" . "object")
                   ("properties" . (("command_name" . (("type" . "string")
@@ -61,7 +61,7 @@
        s))))
 
 ;; eval_expression - Evaluate a Lisp expression (for advanced users)
-(define-mcp-tool "eval_expression" (expression package-name)
+(define-secure-mcp-tool "eval_expression" (expression package-name)
   (:description "Evaluate a Lisp expression in the editor"
    :input-schema (("type" . "object")
                   ("properties" . (("expression" . (("type" . "string")

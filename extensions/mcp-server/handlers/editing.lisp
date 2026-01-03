@@ -3,7 +3,7 @@
 ;;; Editing Operation Tools
 
 ;; buffer_insert - Insert text at position
-(define-mcp-tool "buffer_insert" (buffer-name line column text)
+(define-secure-mcp-tool "buffer_insert" (buffer-name line column text)
   (:description "Insert text at a specific position in a buffer"
    :input-schema (("type" . "object")
                   ("properties" . (("buffer_name" . (("type" . "string")
@@ -33,7 +33,7 @@
             (length text) line column)))
 
 ;; buffer_delete_region - Delete text in a region
-(define-mcp-tool "buffer_delete_region" (buffer-name start-line start-col end-line end-col)
+(define-secure-mcp-tool "buffer_delete_region" (buffer-name start-line start-col end-line end-col)
   (:description "Delete text in a region"
    :input-schema (("type" . "object")
                   ("properties" . (("buffer_name" . (("type" . "string")
@@ -69,7 +69,7 @@
         (format nil "Deleted ~A characters" (length deleted-text))))))
 
 ;; buffer_replace - Replace text in a region
-(define-mcp-tool "buffer_replace" (buffer-name start-line start-col end-line end-col new-text)
+(define-secure-mcp-tool "buffer_replace" (buffer-name start-line start-col end-line end-col new-text)
   (:description "Replace text in a region with new text"
    :input-schema (("type" . "object")
                   ("properties" . (("buffer_name" . (("type" . "string")
@@ -109,7 +109,7 @@
                 (length deleted-text) (length new-text))))))
 
 ;; buffer_save - Save a buffer to file
-(define-mcp-tool "buffer_save" (buffer-name)
+(define-secure-mcp-tool "buffer_save" (buffer-name)
   (:description "Save a buffer to its associated file"
    :input-schema (("type" . "object")
                   ("properties" . (("buffer_name" . (("type" . "string")
@@ -126,7 +126,7 @@
     (format nil "Buffer saved: ~A" (buffer-filename buffer))))
 
 ;; buffer_set_content - Replace entire buffer content
-(define-mcp-tool "buffer_set_content" (buffer-name content)
+(define-secure-mcp-tool "buffer_set_content" (buffer-name content)
   (:description "Replace entire buffer content"
    :input-schema (("type" . "object")
                   ("properties" . (("buffer_name" . (("type" . "string")

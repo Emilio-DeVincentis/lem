@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ros-install(1)</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../ros.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">ros-install(1)</h1>
+<ul>
+<li class="author">Roswell Project Team</li>
+</ul>
+</header>
+<p>ros-install - Install lisp implementations or quicklisp system</p>
+<h1 id="synopsis">Synopsis</h1>
+<ul>
+<li><strong>ros install</strong> system [system …]</li>
+<li><strong>ros install</strong> impl[/version] [param …]</li>
+</ul>
+<h1 id="description">Description</h1>
+<dl>
+<dt>system</dt>
+<dd><p>a name specifying a system.</p>
+</dd>
+<dt>impl</dt>
+<dd><p>a name specifying a lisp implementation.</p>
+</dd>
+</dl>
+<!-- # subcommands -->
+<h1 id="installing-a-lisp-implementation">Installing a Lisp Implementation</h1>
+<p>When the <code>impl</code> or <code>system</code> matches to one of the supported implementations, it fetches, downloads and installs it to one of the internal directory managed by roswell (~/.roswell, or <code>ROSWELL_INSTALL_DIR</code>). In order to use the installed implementation, you have to run <em>ros-use(1)</em>.</p>
+<p>For example, the following command downloads the latest sbcl binary from sbcl.org. Note that this may be different from the default binary installed by roswell, called <code>sbcl-bin</code>. <code>sbcl-bin</code> is a stable and well-tested version of the sbcl binary which is supposed to be a little older than the latest sbcl.</p>
+<pre><code>$ ros install sbcl</code></pre>
+<p>When invoked without a name, it prints the list of installable implementations. (Not to be confused with <code>ros list installed</code>, which shows the implementations already installed.)</p>
+<pre><code>Usage: ros install impl [OPTIONS]
+
+For more details on impl specific options, type:
+ros help install impl
+
+Candidates impls for installation are:
+ecl
+sbcl
+clisp
+ccl-bin
+sbcl-bin</code></pre>
+<p>The name can be optionally followed by a slash <code>/</code> and a version of the implementation.</p>
+<pre><code>$ ros install sbcl/1.2.14</code></pre>
+<p>There might be some <em>hidden</em> implementation that are not listed here — they are in the alpha quality, but try the one you like or watch the website (https://github.com/roswell/roswell).</p>
+<pre><code>$ ros install ccl
+$ ros install abcl
+$ ...</code></pre>
+<!-- # options -->
+<!--  -->
+<!-- # Environmental Variables -->
+<h1 id="installing-a-quicklisp-system-and-the-bundled-roswell-scripts">Installing a quicklisp system and the bundled roswell scripts</h1>
+<p>If the specified name does not match any of the implementations, roswell tries to find a quicklisp system of the given name.</p>
+<pre><code>$ ros install alexandria</code></pre>
+<p>After compiling and loading the system, it funcalls <code>ros:*build-hook*</code> special variable with no argument, if some function is set during the compilation/load.</p>
+<p>When the system comes with a <strong>roswell script</strong> created by <em><a href="ros-init.html">ros-init</a></em>(1) in the subdirectory <code>roswell</code>, they are installed into <strong>ROSWELL_INSTALL_DIR/bin</strong>. Setting the path to this directory makes those scripts available from the shell command line.</p>
+<pre><code>$ ros install qlot
+System &#39;qlot&#39; found. Loading the system..
+Processing build-hook..
+Found 1 scripts: qlot
+Attempting to install the scripts in roswell/ subdirectory of the system...
+/home/user/.roswell/bin/qlot
+
+$ qlot
+Usage: qlot [install | update | bundle | exec shell-args..]</code></pre>
+<h1 id="see-also">SEE ALSO</h1>
+<p><em>sbcl</em>(1), <em><a href="ros.html">ros</a></em>(1), <em><a href="ros-list.html">ros-list</a></em>(1), <em><a href="ros-init.html">ros-init</a></em>(1)</p>
+<p>_</p>
+</body>
+</html>

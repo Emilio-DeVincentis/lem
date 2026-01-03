@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ros(1)</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../ros.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">ros(1)</h1>
+<ul>
+<li class="author">Roswell Project Team</li>
+</ul>
+</header>
+<p>Roswell - Common Lisp environment setup Utility</p>
+<h1 id="synopsis">Synopsis</h1>
+<ul>
+<li><strong>ros</strong> [<strong>options</strong>] <code>[command [args...]</code></li>
+<li><strong>ros</strong> [<strong>options</strong>] <code>[--]script [args...]</code></li>
+<li><strong>ros</strong> [<strong>options</strong>] &lt; script.ros</li>
+</ul>
+<h1 id="description">Description</h1>
+<p>Roswell is a command line tool for installing and managing Common Lisp implementations, as well as a scripting infrastructure for templating, writing, executing, compiling, distributing, downloading and installing ROSWELL-SCRIPTS written in Common Lisp.</p>
+<p>Currently roswell supports sbcl, ccl, clisp and ecl as its supported lisp implementations. For further details see <em><a href="ros-install.html">ros-install</a></em>(1).</p>
+<p>Scripts installed by roswell will be system wide if appropriate directory is included in PATH.</p>
+<h1 id="subcommands">Subcommands</h1>
+<p>In an order of utility/frequency.</p>
+<dl>
+<dt>install</dt>
+<dd><p>Install a given implementation (e.g. sbcl, ccl) or a system (e.g. alexandria) for roswell environment. See <em><a href="ros-install.html">ros-install</a></em>(1).</p>
+</dd>
+<dt>init [name[.ros]]</dt>
+<dd><p>Create a new ros script. <code>.ros</code> is optional, and is added automaticaly. See <em><a href="ros-init.html">ros-init</a></em>.</p>
+</dd>
+<dt>dump [executable|output] [script]</dt>
+<dd><p>Dump an image of the script for the faster startup or to make an executable. See <em><a href="ros-dump.html">ros-dump</a></em>.</p>
+</dd>
+<dt>build</dt>
+<dd><p>Make an executable from the script. See <em><a href="ros-build.html">ros-build</a></em>.</p>
+</dd>
+<dt>run</dt>
+<dd><p>Initiate REPL. See <em><a href="ros-run.html">ros-run</a></em>.</p>
+</dd>
+<dt>use</dt>
+<dd><p>Change the default implementation used by roswell. See <em><a href="ros-use.html">ros-use</a></em>.</p>
+</dd>
+<dt>list</dt>
+<dd><p>List the various informations. See <em><a href="ros-list.html">ros-list</a></em>.</p>
+</dd>
+<dt>config</dt>
+<dd><p>Get and set the options. See <em><a href="ros-config.html">ros-config</a></em>.</p>
+</dd>
+<dt>setup</dt>
+<dd><p>Run the initial setup. See <em><a href="ros-setup.html">ros-setup</a></em>.</p>
+</dd>
+<dt>emacs</dt>
+<dd><p>Launch emacs with slime. See <em><a href="ros-emacs.html">ros-emacs</a></em>.</p>
+</dd>
+<dt>wait</dt>
+<dd><p>Wait forever, used for daemonizing the script. See <em><a href="ros-wait.html">ros-wait</a></em>.</p>
+</dd>
+<dt>delete</dt>
+<dd><p>Delete an installed implementation. See <em><a href="ros-delete.html">ros-delete</a></em>.</p>
+</dd>
+<dt>version</dt>
+<dd><p>Show the roswell version information. See <em>ros-version</em>.</p>
+</dd>
+<dt>help</dt>
+<dd><p>Show the subcommand help.</p>
+</dd>
+</dl>
+<h1 id="options">Options</h1>
+<p>Options are processed in left-to-right order.</p>
+<dl>
+<dt>-w CODE –wrap CODE</dt>
+<dd><p>Run the script with a shell wrapper CODE, e.g. rlwrap</p>
+</dd>
+<dt>-m IMAGE –image IMAGE</dt>
+<dd><p>Continue from Lisp image IMAGE</p>
+</dd>
+<dt>-L NAME –lisp NAME</dt>
+<dd><p>Run the script with a lisp impl NAME[/VERSION] if present, e.g. sbcl-bin, sbcl/1.2.16. Fails otherwise.</p>
+</dd>
+<dt>-l FILE –load FILE</dt>
+<dd><p>Load a lisp file FILE while building</p>
+</dd>
+<dt>-S X –source-registry X</dt>
+<dd><p>Override the source registry of asdf systems.</p>
+</dd>
+<dt>-s SYSTEM –system SYSTEM</dt>
+<dd><p>Load the asdf SYSTEM while building.</p>
+</dd>
+<dt>–load-system SYSTEM</dt>
+<dd><p>Same as above (buildapp compatibility)</p>
+</dd>
+<dt>-p PACKAGE –package PACKAGE</dt>
+<dd><p>Change the current package to PACKAGE</p>
+</dd>
+<dt>-sp SP –system-package SP</dt>
+<dd><p>Combination of -s SP and -p SP</p>
+</dd>
+<dt>-e FORM –eval FORM</dt>
+<dd><p>Evaluate FORM while building</p>
+</dd>
+<dt>–require MODULE</dt>
+<dd><p>require MODULE while building</p>
+</dd>
+<dt>-q –quit</dt>
+<dd><p>quit lisp here</p>
+</dd>
+<dt>-r FUNC –restart FUNC</dt>
+<dd><p>the build image restarts from calling FUNC</p>
+</dd>
+<dt>-E FUNC –entry FUNC</dt>
+<dd><p>the build image restarts from calling (FUNC argv).</p>
+</dd>
+<dt>-i FORM –init FORM</dt>
+<dd><p>evaluate FORM after the restart.</p>
+</dd>
+<dt>-ip FORM –print FORM</dt>
+<dd><p>evaluate and princ FORM after the restart</p>
+</dd>
+<dt>-iw FORM –write FORM</dt>
+<dd><p>evaluate and write FORM after the restart</p>
+</dd>
+<dt>-F FORM –final FORM</dt>
+<dd><p>evaluate FORM before dumping the IMAGE</p>
+</dd>
+<dt>-R –rc</dt>
+<dd><p>try to read /etc/rosrc, ~/.roswell/init.lisp</p>
+</dd>
+<dt>+R –no-rc</dt>
+<dd><p>skip /etc/rosrc, ~/.roswell/init.lisp</p>
+</dd>
+<dt>-Q –quicklisp</dt>
+<dd><p>load quicklisp (default)</p>
+</dd>
+<dt>+Q –no-quicklisp</dt>
+<dd><p>do not load quicklisp</p>
+</dd>
+<dt>-v –verbose</dt>
+<dd><p>be quite verbose while building</p>
+</dd>
+<dt>–quiet</dt>
+<dd><p>suppress output while building (default)</p>
+</dd>
+<dt>–test</dt>
+<dd><p>for test purpose</p>
+</dd>
+<dt>dynamic-space-size=[size in MB]</dt>
+<dd><p>SBCL specific. The argument is passed to SBCL by <code>--dynamic-space-size</code></p>
+</dd>
+</dl>
+<h1 id="environmental-variables">Environmental Variables</h1>
+<dl>
+<dt>ROSWELL_HOME</dt>
+<dd><p>Specifies the home directory of roswell, defaulted to $HOME on Unix platform .</p>
+</dd>
+</dl>
+<!-- ROSWELL_HTML_TEST -->
+<!--  -->
+<!--   :  -->
+<h1 id="bugs">Bugs</h1>
+<p>Check out issues list (https://github.com/roswell/roswell/issues)</p>
+<h1 id="see-also">SEE ALSO</h1>
+<p><em>sbcl</em>(1) <em><a href="ros-dump.html">ros-dump</a></em>(1) <em><a href="ros-init.html">ros-init</a></em>(1) <em><a href="ros-install.html">ros-install</a></em>(1) <em><a href="ros-list.html">ros-list</a></em>(1) <em><a href="ros-setup.html">ros-setup</a></em>(1)</p>
+<p>_</p>
+</body>
+</html>
