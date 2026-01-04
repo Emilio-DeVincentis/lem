@@ -298,6 +298,7 @@
                "lem-bookmark"
                "lem-mcp-server"
                "lem-ai-chat"
+               "lem-context-manager"
                #+sbcl
                "lem-living-canvas"
                "lem-tree-sitter"
