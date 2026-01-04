@@ -3,10 +3,11 @@
 (defvar *auto-fix-timer* nil)
 (defvar *auto-fix-retries* 0)
 (defvar *auto-fix-limit* 5)
+(defvar *auto-fix-build-command* "./mvnw compile")
 
 (defun run-build ()
   "Run the build command and check the result."
-  (let ((terminal-buffer (lem-terminal:term-execute "./mvnw compile" :name "*spring-auto-fix-terminal*")))
+  (let ((terminal-buffer (lem-terminal:term-execute *auto-fix-build-command* :name "*spring-auto-fix-terminal*")))
     (lem-terminal:term-send-input terminal-buffer "
 ")
     (start-timer (make-idle-timer (lambda () (check-build-status terminal-buffer))) 1000 :repeat nil)))
@@ -55,18 +56,10 @@
 
 (defun apply-fix (fix buffer)
   "Apply the fix to the buffer."
-  (let* ((parts (uiop:split-string fix :separator "=======
-"))
-         (search-block (first parts))
-         (replace-block (second parts))
-         (search-content (subseq search-block
-                                 (length "<<<<<<< SEARCH
-")
-                                 (search "=======
-" search-block)))
-         (replace-content (subseq replace-block
-                                  0
-                                  (search ">>>>>>> REPLACE" replace-block))))
+  (ppcre:register-groups-bind (search-content replace-content)
+      ("(?s)<<<<<<< SEARCH\
+(.*?)=======\
+(.*?)>>>>>>> REPLACE" fix)
     (switch-to-buffer buffer)
     (lem:replace-string (buffer-point buffer) search-content replace-content)
     (if (< *auto-fix-retries* *auto-fix-limit*)

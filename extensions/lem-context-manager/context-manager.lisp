@@ -20,10 +20,22 @@
 
 (defun get-lsp-diagnostics-context ()
   "Get the current LSP diagnostics as a formatted string."
+  ;; NOTE: This uses an internal function from lem-lsp-mode.
+  ;; It would be better to have a public API for this.
   (let ((diagnostics (lem-lsp-mode::buffer-diagnostics (current-buffer))))
     (when diagnostics
       (format nil "LSP Diagnostics:~%~{  - ~A~%~}"
               (mapcar #'lem-lsp-mode::diagnostic-message diagnostics)))))
+
+(defun format-java-symbol (symbol indent)
+  "Format a single Java symbol with indentation."
+  (with-output-to-string (s)
+    (dotimes (i indent) (princ "  " s))
+    (format s "- ~A (~A)"
+            (lem-lsp-mode::document-symbol-name symbol)
+            (lem-lsp-mode::symbol-kind-to-string (lem-lsp-mode::document-symbol-kind symbol)))
+    (dolist (child (lem-lsp-mode::document-symbol-children symbol))
+      (princ (format-java-symbol child (1+ indent)) s))))
 
 (defun get-java-class-structure-context ()
   "Get the Java class structure as a formatted string."
@@ -33,7 +45,7 @@
         (with-output-to-string (s)
           (princ "Java Class Structure:" s)
           (dolist (symbol symbols)
-            (format s "~%~A" (lem-lsp-mode::symbol-string symbol))))))))
+            (princ (format-java-symbol symbol 1) s)))))))
 
 (defun get-context-prompt ()
   "Gather all context information and format it into a single string."
