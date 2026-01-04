@@ -299,6 +299,7 @@
                "lem-mcp-server"
                "lem-ai-chat"
                "lem-context-manager"
+               "lem-spring-auto-fix"
                #+sbcl
                "lem-living-canvas"
                "lem-tree-sitter"
